@@ -2608,48 +2608,313 @@ function openBackup(){
 
 
 document.getElementById("importFile")
-  .addEventListener("change",function(e){
+  .addEventListener("change", function(e){
 
-    const file=e.target.files[0];
+    const file = e.target.files[0];
 
-    if(!file)return;
+    if(!file) return;
 
-    const reader=new FileReader();
+    const reader = new FileReader();
 
-    reader.onload=function(){
+    reader.onload = function(){
 
       try{
 
-        const data=JSON.parse(reader.result);
+        const data = JSON.parse(reader.result);
 
-        if(!Array.isArray(data.drinks))
-          throw new Error();
-
+        if(!data || !Array.isArray(data.drinks)){
+          throw new Error("Formato non valido");
+        }
 
         if(!confirm(
-          `Ripristinare ${data.drinks.length} drink?`
-        ))return;
+          `Trovati ${data.drinks.length} drink e ${
+            Array.isArray(data.categories)
+              ? data.categories.length
+              : 0
+          } categorie.\n\nVuoi importarli?`
+        )){
+          return;
+        }
 
 
-        drinks=data.drinks;
+        /* =========================
+           IMPORT CATEGORIE
+        ========================= */
 
-        if(Array.isArray(data.categories))
-          categories=data.categories;
+        if(Array.isArray(data.categories)){
+
+          categories = data.categories.map((c,index)=>({
+
+            id: c.id || Date.now() + index,
+
+            nome: String(
+              c.nome || c.name || "Categoria"
+            ).trim(),
+
+            color: c.color || "#65755A"
+
+          }));
+
+        }
 
 
-        saveData();
+        /* =========================
+           IMPORT DRINK
+        ========================= */
+
+        drinks = data.drinks.map((d,index)=>{
+
+          let ingredienti = [];
+
+
+          /*
+            FORMATO V2
+            [
+              {
+                qty:"30",
+                unit:"ml",
+                name:"Gin"
+              }
+            ]
+          */
+
+          if(Array.isArray(d.ingredienti)){
+
+            ingredienti = d.ingredienti.map(i=>{
+
+              /* Se è già V2 */
+              if(typeof i === "object"){
+
+                return {
+
+                  qty: String(i.qty || "").trim(),
+
+                  unit: String(i.unit || "").trim(),
+
+                  name: String(
+                    i.name ||
+                    i.nome ||
+                    i.ingredient ||
+                    ""
+                  ).trim()
+
+                };
+
+              }
+
+              /* Se è una semplice stringa */
+              return parseOldIngredient(String(i));
+
+            }).filter(i=>i.name);
+
+          }
+
+
+          /*
+            FORMATO V1
+            "3cl gin
+             3cl vermouth
+             3cl campari"
+          */
+
+          else if(typeof d.ingredienti === "string"){
+
+            ingredienti =
+              d.ingredienti
+                .split(/\r?\n/)
+                .map(line=>parseOldIngredient(line))
+                .filter(i=>i.name);
+
+          }
+
+
+          /*
+            CREA IL NUOVO DRINK
+          */
+
+          return {
+
+            id:
+              d.id ||
+              Date.now() +
+              index +
+              Math.floor(Math.random()*1000),
+
+            nome:
+              String(
+                d.nome ||
+                d.name ||
+                "Senza nome"
+              ).trim(),
+
+            tipo:
+              d.tipo === "prebatch"
+                ? "prebatch"
+                : "drink",
+
+            categorie:
+              Array.isArray(d.categorie)
+                ? d.categorie
+                    .map(Number)
+                    .filter(id =>
+                      categories.some(c=>c.id===id)
+                    )
+                : [],
+
+            ingredienti: ingredienti,
+
+            istruzioni:
+              String(
+                d.istruzioni ||
+                d.preparazione ||
+                d.preparation ||
+                ""
+              ),
+
+            servizio:
+              String(
+                d.servizio ||
+                d.service ||
+                ""
+              ),
+
+            favorite:
+              Boolean(d.favorite),
+
+            data:
+              d.data ||
+              new Date().toLocaleDateString("it-IT")
+
+          };
+
+        });
+
+
+        /* =========================
+           SALVATAGGIO
+        ========================= */
+
+        localStorage.setItem(
+          DRINKS_KEY,
+          JSON.stringify(drinks)
+        );
+
+        localStorage.setItem(
+          CATS_KEY,
+          JSON.stringify(categories)
+        );
+
+
+        refreshUI();
 
         closeOverlay("backupModal");
 
-        alert("Backup ripristinato.");
+        alert(
+          `Importazione completata!\n\n` +
+          `Drink: ${drinks.length}\n` +
+          `Categorie: ${categories.length}`
+        );
 
-      }catch{
 
-        alert("File di backup non valido.");
+      }catch(error){
+
+        console.error(error);
+
+        alert(
+          "Non riesco a leggere questo file.\n\n" +
+          "Controlla che sia un backup JSON di Mint Pocket."
+        );
 
       }
 
     };
+
+
+    reader.onerror = function(){
+
+      alert("Errore nella lettura del file.");
+
+    };
+
+
+    reader.readAsText(file);
+
+    e.target.value = "";
+
+  });
+
+
+/* =========================
+   CONVERSIONE INGREDIENTI V1
+========================= */
+
+function parseOldIngredient(line){
+
+  line = String(line || "").trim();
+
+  if(!line){
+    return {
+      qty:"",
+      unit:"",
+      name:""
+    };
+  }
+
+
+  /*
+    Esempi riconosciuti:
+
+    3cl gin
+    30ml gin
+    1 dash angostura
+    2 barspoon zucchero
+    1 pz lime
+    3 cl Gin
+  */
+
+
+  const match = line.match(
+    /^(\d+(?:[.,]\d+)?)\s*(ml|cl|g|kg|dash|barspoon|bs|pz)\s+(.+)$/i
+  );
+
+
+  if(match){
+
+    let unit = match[2].toLowerCase();
+
+    if(unit === "bs"){
+      unit = "barspoon";
+    }
+
+    return {
+
+      qty: match[1].replace(",", "."),
+
+      unit: unit,
+
+      name: match[3].trim()
+
+    };
+
+  }
+
+
+  /*
+    Se non riconosce quantità/unità,
+    conserva comunque tutto come ingrediente.
+  */
+
+  return {
+
+    qty:"",
+
+    unit:"",
+
+    name:line
+
+  };
+
+}
 
     reader.readAsText(file);
 
