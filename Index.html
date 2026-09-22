@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#65755A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mint Pocket">
+
+<title>Mint Pocket V2</title>
+
+<style>
+:root{
+  --mint:#9BAF8B;
+  --mint-dark:#5C6B4F;
+  --mint-deep:#46533D;
+  --mint-light:#E5EBDD;
+  --cream:#F7F4EF;
+  --white:#FFFFFF;
+  --text:#292D28;
+  --soft:#72766F;
+  --line:#E5E3DD;
+  --gold:#C7A36A;
+  --danger:#D85C5C;
+  --radius:20px;
+  --shadow:0 8px 28px rgba(40,50,35,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+button,input,textarea,select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:560px;
+  margin:0 auto;
+}
+
+/* HEADER */
+
+.top{
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    18px
+    16px;
+  background:
+    linear-gradient(145deg,#AABB9D,#5D6D51);
+  color:white;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 8px 25px rgba(70,83,61,.18);
+}
+
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:14px;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  backdrop-filter:blur(10px);
+}
+
+.brand-text h1{
+  font-size:23px;
+  letter-spacing:-.5px;
+}
+
+.brand-text p{
+  font-size:11px;
+  opacity:.78;
+  margin-top:2px;
+}
+
+.top-actions{
+  display:flex;
+  gap:7px;
+}
+
+.icon-btn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:13px;
+  color:white;
+  background:rgba(255,255,255,.16);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+/* SEARCH */
+
+.search-area{
+  padding:15px 16px 4px;
+}
+
+.search-box{
+  position:relative;
+}
+
+.search-box input{
+  width:100%;
+  height:48px;
+  border:none;
+  border-radius:16px;
+  padding:0 44px;
+  background:white;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+  font-size:15px;
+  outline:none;
+}
+
+.search-box input:focus{
+  box-shadow:0 0 0 3px rgba(155,175,139,.28);
+}
+
+.search-icon{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:17px;
+  color:#888;
+}
+
+.clear-search{
+  position:absolute;
+  right:9px;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:50%;
+  background:#EEEDE9;
+  color:#777;
+  display:none;
+}
+
+/* CONTENT */
+
+.content{
+  padding:14px 16px 20px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+
+.greeting{
+  margin:8px 2px 18px;
+}
+
+.greeting h2{
+  font-size:26px;
+  letter-spacing:-.7px;
+}
+
+.greeting p{
+  color:var(--soft);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:white;
+  border-radius:18px;
+  padding:15px 10px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:22px;
+  color:var(--mint-dark);
+}
+
+.stat span{
+  font-size:11px;
+  color:var(--soft);
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:18px 2px 10px;
+}
+
+.section-title h3{
+  font-size:16px;
+}
+
+.section-title button{
+  border:none;
+  background:none;
+  color:var(--mint-dark);
+  font-weight:600;
+  font-size:12px;
+}
+
+/* QUICK ACTIONS */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.quick{
+  border:none;
+  background:white;
+  border-radius:18px;
+  padding:17px;
+  text-align:left;
+  box-shadow:var(--shadow);
+  color:var(--text);
+  transition:.15s;
+}
+
+.quick:active{
+  transform:scale(.98);
+}
+
+.quick-icon{
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+.quick strong{
+  display:block;
+  font-size:14px;
+}
+
+.quick span{
+  display:block;
+  font-size:11px;
+  color:var(--soft);
+  margin-top:3px;
+}
+
+/* CATEGORY CHIPS */
+
+.chips{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:2px 2px 7px;
+  scrollbar-width:none;
+}
+
+.chips::-webkit-scrollbar{
+  display:none;
+}
+
+.chip{
+  white-space:nowrap;
+  border:1px solid var(--line);
+  background:white;
+  color:var(--text);
+  border-radius:999px;
+  padding:8px 13px;
+  font-size:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.04);
+}
+
+/* DRINK CARDS */
+
+.drink-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.drink-card{
+  background:white;
+  border-radius:20px;
+  padding:15px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(155,175,139,.14);
+  position:relative;
+  overflow:hidden;
+}
+
+.drink-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:var(--mint);
+}
+
+.drink-main{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.drink-info{
+  min-width:0;
+}
+
+.drink-title{
+  font-size:17px;
+  font-weight:700;
+  color:var(--mint-dark);
+}
+
+.drink-type{
+  font-size:10px;
+  color:var(--soft);
+  margin-top:3px;
+}
+
+.favorite{
+  border:none;
+  background:none;
+  font-size:21px;
+  width:32px;
+  height:32px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px;
+}
+
+.tag-cat{
+  color:white;
+  padding:4px 8px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:600;
+}
+
+.ingredient-preview{
+  margin-top:11px;
+  color:var(--soft);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.card-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+}
+
+.card-date{
+  color:#999;
+  font-size:10px;
+}
+
+.card-open{
+  border:none;
+  background:var(--mint-light);
+  color:var(--mint-dark);
+  border-radius:999px;
+  padding:7px 11px;
+  font-size:11px;
+  font-weight:600;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:50px 20px;
+  color:var(--soft);
+}
+
+.empty-icon{
+  font-size:38px;
+  margin-bottom:12px;
+}
+
+.empty h3{
+  color:var(--text);
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.empty p{
+  font-size:12px;
+  line-height:1.5;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:560px;
+  height:74px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-top:1px solid rgba(0,0,0,.07);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding-bottom:env(safe-area-inset-bottom);
+  z-index:50;
+}
+
+.nav-btn{
+  flex:1;
+  border:none;
+  background:none;
+  color:#999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font-size:10px;
+  height:100%;
+}
+
+.nav-btn span:first-child{
+  font-size:20px;
+}
+
+.nav-btn.active{
+  color:var(--mint-dark);
+  font-weight:700;
+}
+
+/* FAB */
+
+.fab{
+  position:fixed;
+  right:18px;
+  bottom:91px;
+  width:55px;
+  height:55px;
+  border:none;
+  border-radius:50%;
+  background:linear-gradient(145deg,var(--mint),var(--mint-dark));
+  color:white;
+  font-size:25px;
+  box-shadow:0 9px 25px rgba(70,83,61,.35);
+  z-index:40;
+}
+
+/* MODALS */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(20,25,18,.46);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:100;
+}
+
+.overlay.active{
+  display:flex;
+}
+
+.sheet{
+  width:100%;
+  max-width:560px;
+  max-height:92vh;
+  overflow-y:auto;
+  background:#fff;
+  border-radius:25px 25px 0 0;
+  padding:
+    13px
+    18px
+    calc(25px + env(safe-area-inset-bottom));
+  animation:sheetUp .2s ease;
+}
+
+@keyframes sheetUp{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+.handle{
+  width:38px;
+  height:4px;
+  border-radius:99px;
+  background:#DADAD5;
+  margin:0 auto 17px;
+}
+
+.sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px;
+}
+
+.sheet-head h2{
+  font-size:20px;
+}
+
+.close{
+  width:35px;
+  height:35px;
+  border:none;
+  border-radius:50%;
+  background:#F1F1EE;
+  color:#666;
+  font-size:17px;
+}
+
+/* FORM */
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-label{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  color:var(--soft);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:7px;
+}
+
+.input,
+.textarea,
+.select{
+  width:100%;
+  border:1px solid #DDDCD6;
+  border-radius:13px;
+  background:#FAFAF8;
+  padding:12px;
+  font-size:14px;
+  outline:none;
+}
+
+.textarea{
+  min-height:105px;
+  resize:vertical;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus{
+  border-color:var(--mint);
+  box-shadow:0 0 0 3px rgba(155,175,139,.18);
+}
+
+/* TYPE */
+
+.type-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.type-option{
+  border:2px solid #E5E4DF;
+  border-radius:15px;
+  padding:13px;
+  background:white;
+  text-align:center;
+  font-size:13px;
+}
+
+.type-option.selected{
+  border-color:var(--mint);
+  background:var(--mint-light);
+  color:var(--mint-dark);
+  font-weight:700;
+}
+
+/* INGREDIENTS */
+
+.ingredients{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.ingredient-row{
+  display:grid;
+  grid-template-columns:65px 70px 1fr 36px;
+  gap:5px;
+}
+
+.remove-ing{
+  border:none;
+  border-radius:10px;
+  background:#F8E9E9;
+  color:var(--danger);
+  font-size:15px;
+}
+
+.add-ing{
+  width:100%;
+  margin-top:8px;
+  border:1px dashed var(--mint);
+  border-radius:12px;
+  background:var(--mint-light);
+  color:var(--mint-dark);
+  padding:10px;
+  font-weight:600;
+  font-size:12px;
+}
+
+/* CATEGORIES */
+
+.category-select{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.category-choice{
+  border:1px solid #DDD;
+  background:white;
+  padding:8px 11px;
+  border-radius:999px;
+  font-size:11px;
+}
+
+.category-choice.selected{
+  background:var(--mint);
+  color:white;
+  border-color:var(--mint);
+}
+
+/* SAVE */
+
+.save-btn{
+  width:100%;
+  border:none;
+  background:linear-gradient(145deg,var(--mint),var(--mint-dark));
+  color:white;
+  border-radius:15px;
+  padding:14px;
+  font-size:14px;
+  font-weight:700;
+  margin-top:8px;
+  box-shadow:0 8px 18px rgba(92,107,79,.25);
+}
+
+/* DETAIL */
+
+.detail-title{
+  font-size:27px;
+  color:var(--mint-dark);
+  margin-bottom:4px;
+}
+
+.detail-sub{
+  color:var(--soft);
+  font-size:12px;
+  margin-bottom:18px;
+}
+
+.detail-section{
+  margin-bottom:20px;
+}
+
+.detail-section h3{
+  font-size:12px;
+  text-transform:uppercase;
+  color:var(--soft);
+  letter-spacing:.07em;
+  margin-bottom:9px;
+}
+
+.detail-ingredients{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.detail-ing{
+  display:flex;
+  justify-content:space-between;
+  background:#F7F7F4;
+  border-radius:10px;
+  padding:10px;
+  font-size:13px;
+}
+
+.detail-ing strong{
+  color:var(--mint-dark);
+}
+
+.preparation{
+  white-space:pre-line;
+  line-height:1.65;
+  color:#555;
+  font-size:14px;
+}
+
+.detail-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.action-btn{
+  border:none;
+  border-radius:13px;
+  padding:12px;
+  font-weight:600;
+}
+
+.action-edit{
+  background:var(--mint-light);
+  color:var(--mint-dark);
+}
+
+.action-delete{
+  background:#F9EAEA;
+  color:var(--danger);
+}
+
+/* SETTINGS */
+
+.setting-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting-row strong{
+  font-size:13px;
+}
+
+.setting-row span{
+  display:block;
+  font-size:11px;
+  color:var(--soft);
+  margin-top:3px;
+}
+
+.setting-button{
+  border:none;
+  background:var(--mint-light);
+  color:var(--mint-dark);
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:600;
+}
+
+/* ALPHABET */
+
+.alphabet{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:12px;
+}
+
+.letter{
+  width:30px;
+  height:30px;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:8px;
+  color:var(--mint-dark);
+  font-size:11px;
+  font-weight:700;
+}
+
+.letter.disabled{
+  opacity:.25;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:400px){
+  .ingredient-row{
+    grid-template-columns:55px 60px 1fr 34px;
+  }
+
+  .greeting h2{
+    font-size:23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="top">
+    <div class="top-row">
+
+      <div class="brand">
+        <div class="logo">🌿</div>
+        <div class="brand-text">
+          <h1>Mint Pocket</h1>
+          <p>Il tuo taccuino dei drink</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" onclick="openBackup()">☁️</button>
+        <button class="icon-btn" onclick="openSettings()">⚙️</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <div class="search-area">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Cerca drink o ingrediente..."
+        autocomplete="off"
+      >
+      <button class="clear-search" id="clearSearch">×</button>
+    </div>
+  </div>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <section class="page active" id="homePage">
+
+      <div class="greeting">
+        <h2>Buonasera 👋</h2>
+        <p>Che cosa prepariamo oggi?</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="statDrinks">0</strong>
+          <span>Drink</span>
+        </div>
+
+        <div class="stat">
+          <strong id="statBatch">0</strong>
+          <span>Pre Batch</span>
+        </div>
+
+        <div class="stat">
+          <strong id="statFav">0</strong>
+          <span>Preferiti</span>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+
+        <button class="quick" onclick="showPage('drinksPage');setDrinkFilter('all')">
+          <div class="quick-icon">🥃</div>
+          <strong>Tutti i drink</strong>
+          <span>Apri il ricettario</span>
+        </button>
+
+        <button class="quick" onclick="showPage('drinksPage');setDrinkFilter('prebatch')">
+          <div class="quick-icon">🧃</div>
+          <strong>Pre Batch</strong>
+          <span>Preparazioni e batch</span>
+        </button>
+
+        <button class="quick" onclick="showPage('drinksPage');setDrinkFilter('favorite')">
+          <div class="quick-icon">⭐</div>
+          <strong>Preferiti</strong>
+          <span>I tuoi drink salvati</span>
+        </button>
+
+        <button class="quick" onclick="openDrinkEditor()">
+          <div class="quick-icon">＋</div>
+          <strong>Nuovo drink</strong>
+          <span>Aggiungi una ricetta</span>
+        </button>
+
+      </div>
+
+      <div class="section-title">
+        <h3>Categorie</h3>
+        <button onclick="openCategoryManager()">Gestisci</button>
+      </div>
+
+      <div class="chips" id="homeCategories"></div>
+
+      <div class="section-title">
+        <h3>Ultimi aggiunti</h3>
+        <button onclick="showPage('drinksPage');setDrinkFilter('all')">Vedi tutti</button>
+      </div>
+
+      <div class="drink-list" id="recentList"></div>
+
+    </section>
+
+
+    <!-- DRINK -->
+    <section class="page" id="drinksPage">
+
+      <div class="section-title">
+        <h3 id="drinkPageTitle">Tutti i drink</h3>
+        <span id="drinkCounter" style="font-size:11px;color:#888"></span>
+      </div>
+
+      <div class="chips" id="drinkFilters"></div>
+
+      <div class="drink-list" id="drinkList"></div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="page" id="categoriesPage">
+
+      <div class="section-title">
+        <h3>Categorie</h3>
+        <button onclick="openCategoryManager()">Modifica</button>
+      </div>
+
+      <div class="chips" id="allCategories"></div>
+
+      <div class="empty">
+        <div class="empty-icon">📂</div>
+        <h3>Organizza il tuo ricettario</h3>
+        <p>Usa le categorie per trovare velocemente i drink durante il servizio.</p>
+      </div>
+
+    </section>
+
+
+    <!-- FAVORITES -->
+    <section class="page" id="favoritesPage">
+
+      <div class="section-title">
+        <h3>Preferiti</h3>
+      </div>
+
+      <div class="drink-list" id="favoriteList"></div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+    <section class="page" id="settingsPage">
+
+      <div class="section-title">
+        <h3>Impostazioni</h3>
+      </div>
+
+      <div class="drink-card">
+
+        <div class="setting-row">
+          <div>
+            <strong>Backup</strong>
+            <span>Salva tutte le ricette</span>
+          </div>
+          <button class="setting-button" onclick="exportData()">Esporta</button>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <strong>Ripristino</strong>
+            <span>Importa un backup JSON</span>
+          </div>
+          <button class="setting-button" onclick="document.getElementById('importFile').click()">Importa</button>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <strong>Categorie</strong>
+            <span>Modifica colori e nomi</span>
+          </div>
+          <button class="setting-button" onclick="openCategoryManager()">Apri</button>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <strong>Dati locali</strong>
+            <span>Salvati direttamente sul dispositivo</span>
+          </div>
+          <span style="color:var(--mint-dark);font-weight:700">ATTIVI</span>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+
+<!-- FAB -->
+<button class="fab" onclick="openDrinkEditor()">＋</button>
+
+
+<!-- NAVIGATION -->
+<nav class="bottom-nav">
+
+  <button class="nav-btn active" data-page="homePage" onclick="showPage('homePage')">
+    <span>⌂</span>
+    <span>Home</span>
+  </button>
+
+  <button class="nav-btn" data-page="drinksPage" onclick="showPage('drinksPage')">
+    <span>🥃</span>
+    <span>Drink</span>
+  </button>
+
+  <button class="nav-btn" data-page="categoriesPage" onclick="showPage('categoriesPage')">
+    <span>📂</span>
+    <span>Categorie</span>
+  </button>
+
+  <button class="nav-btn" data-page="favoritesPage" onclick="showPage('favoritesPage')">
+    <span>⭐</span>
+    <span>Preferiti</span>
+  </button>
+
+  <button class="nav-btn" data-page="settingsPage" onclick="showPage('settingsPage')">
+    <span>⚙️</span>
+    <span>Altro</span>
+  </button>
+
+</nav>
+
+
+<!-- DRINK EDITOR -->
+<div class="overlay" id="drinkEditor">
+
+  <div class="sheet">
+
+    <div class="handle"></div>
+
+    <div class="sheet-head">
+      <h2 id="editorTitle">Nuovo drink</h2>
+      <button class="close" onclick="closeOverlay('drinkEditor')">×</button>
+    </div>
+
+    <input type="hidden" id="editingId">
+
+    <div class="form-group">
+      <label class="form-label">Nome</label>
+      <input class="input" id="drinkName" placeholder="Es. Negroni">
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">Tipo</label>
+
+      <div class="type-grid">
+
+        <button
+          class="type-option selected"
+          id="typeDrink"
+          onclick="selectType('drink')">
+          🥃 Drink
+        </button>
+
+        <button
+          class="type-option"
+          id="typeBatch"
+          onclick="selectType('prebatch')">
+          🧃 Pre Batch
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">Categorie</label>
+
+      <div class="category-select" id="editorCategories"></div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">Ingredienti</label>
+
+      <div class="ingredients" id="ingredientRows"></div>
+
+      <button class="add-ing" onclick="addIngredient()">
+        ＋ Aggiungi ingrediente
+      </button>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">Preparazione / note</label>
+
+      <textarea
+        class="textarea"
+        id="drinkPreparation"
+        placeholder="Es. Stir con ghiaccio e servire in Old Fashioned..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">Servizio</label>
+
+      <input
+        class="input"
+        id="drinkService"
+        placeholder="Es. Old Fashioned · Orange peel"
+      >
+
+    </div>
+
+
+    <button class="save-btn" onclick="saveDrink()">
+      Salva drink
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- DETAIL -->
+<div class="overlay" id="detailModal">
+
+  <div class="sheet">
+
+    <div class="handle"></div>
+
+    <div class="sheet-head">
+      <span></span>
+      <button class="close" onclick="closeOverlay('detailModal')">×</button>
+    </div>
+
+    <div id="detailContent"></div>
+
+  </div>
+
+</div>
+
+
+<!-- CATEGORY MANAGER -->
+<div class="overlay" id="categoryModal">
+
+  <div class="sheet">
+
+    <div class="handle"></div>
+
+    <div class="sheet-head">
+      <h2>Categorie</h2>
+      <button class="close" onclick="closeOverlay('categoryModal')">×</button>
+    </div>
+
+    <div id="categoryManagerList"></div>
+
+    <button class="add-ing" onclick="addCategory()">
+      ＋ Nuova categoria
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- BACKUP -->
+<div class="overlay" id="backupModal">
+
+  <div class="sheet">
+
+    <div class="handle"></div>
+
+    <div class="sheet-head">
+      <h2>Backup</h2>
+      <button class="close" onclick="closeOverlay('backupModal')">×</button>
+    </div>
+
+    <div class="quick-grid">
+
+      <button class="quick" onclick="exportData()">
+        <div class="quick-icon">📤</div>
+        <strong>Esporta</strong>
+        <span>Salva il database</span>
+      </button>
+
+      <button class="quick" onclick="document.getElementById('importFile').click()">
+        <div class="quick-icon">📥</div>
+        <strong>Ripristina</strong>
+        <span>Carica un backup</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<input
+  type="file"
+  id="importFile"
+  accept=".json"
+  style="display:none"
+>
+
+
+<script>
+
+/* =========================
+   DATABASE
+========================= */
+
+const DRINKS_KEY = "mintPocketV2Drinks";
+const CATS_KEY = "mintPocketV2Categories";
+
+let drinks = [];
+let categories = [];
+
+let selectedType = "drink";
+let currentFilter = "all";
+
+
+/* =========================
+   DEFAULT CATEGORIES
+========================= */
+
+const defaultCategories = [
+  {id:1,nome:"Classici",color:"#65755A"},
+  {id:2,nome:"Signature",color:"#8B6F52"},
+  {id:3,nome:"Aperitivo",color:"#B8875C"},
+  {id:4,nome:"Fresh",color:"#6D9270"},
+  {id:5,nome:"Sour",color:"#9A8B63"},
+  {id:6,nome:"Strong",color:"#6B5B52"},
+  {id:7,nome:"Analcolici",color:"#7A9B91"}
+];
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function loadData(){
+
+  try{
+    drinks=JSON.parse(localStorage.getItem(DRINKS_KEY)) || [];
+  }catch{
+    drinks=[];
+  }
+
+  try{
+    categories=JSON.parse(localStorage.getItem(CATS_KEY));
+
+    if(!Array.isArray(categories) || !categories.length){
+      categories=defaultCategories;
+      saveCategories();
+    }
+
+  }catch{
+    categories=defaultCategories;
+    saveCategories();
+  }
+
+  migrateOldData();
+
+}
+
+
+function saveData(){
+
+  localStorage.setItem(
+    DRINKS_KEY,
+    JSON.stringify(drinks)
+  );
+
+  localStorage.setItem(
+    CATS_KEY,
+    JSON.stringify(categories)
+  );
+
+  refreshUI();
+
+}
+
+
+function saveCategories(){
+
+  localStorage.setItem(
+    CATS_KEY,
+    JSON.stringify(categories)
+  );
+
+}
+
+
+/* =========================
+   OLD V1 MIGRATION
+========================= */
+
+function migrateOldData(){
+
+  const oldKey="mintPocketDrinks_v1";
+  const oldCatKey="mintPocketCategories_v1";
+
+  const oldDrinks=localStorage.getItem(oldKey);
+  const oldCats=localStorage.getItem(oldCatKey);
+
+  if(!oldDrinks && !oldCats) return;
+
+  if(drinks.length===0 && oldDrinks){
+
+    try{
+
+      const old=JSON.parse(oldDrinks);
+
+      drinks=old.map(d=>({
+
+        id:d.id || Date.now()+Math.random(),
+
+        nome:d.nome || "Senza nome",
+
+        tipo:d.tipo || "drink",
+
+        categorie:Array.isArray(d.categorie)
+          ? d.categorie
+          : [],
+
+        ingredienti:convertOldIngredients(d.ingredienti),
+
+        istruzioni:d.istruzioni || "",
+
+        servizio:"",
+
+        favorite:false,
+
+        data:d.data || new Date().toLocaleDateString("it-IT")
+
+      }));
+
+    }catch{}
+
+  }
+
+  if(oldCats){
+
+    try{
+
+      const old=JSON.parse(oldCats);
+
+      if(Array.isArray(old) && old.length){
+
+        categories=old.map((c,i)=>({
+
+          id:c.id || Date.now()+i,
+
+          nome:c.nome || "Categoria",
+
+          color:c.color || "#65755A"
+
+        }));
+
+      }
+
+    }catch{}
+
+  }
+
+  saveData();
+
+}
+
+
+function convertOldIngredients(str){
+
+  if(!str) return [];
+
+  return String(str)
+    .split("\n")
+    .map(line=>({
+
+      qty:"",
+      unit:"",
+      name:line.trim()
+
+    }))
+    .filter(x=>x.name);
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(pageId){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  document.getElementById(pageId)
+    .classList.add("active");
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page===pageId
+      );
+
+    });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  refreshUI();
+
+}
+
+
+/* =========================
+   TYPE
+========================= */
+
+function selectType(type){
+
+  selectedType=type;
+
+  document.getElementById("typeDrink")
+    .classList.toggle(
+      "selected",
+      type==="drink"
+    );
+
+  document.getElementById("typeBatch")
+    .classList.toggle(
+      "selected",
+      type==="prebatch"
+    );
+
+}
+
+
+/* =========================
+   EDITOR
+========================= */
+
+function openDrinkEditor(id=null){
+
+  resetEditor();
+
+  if(id){
+
+    const d=drinks.find(x=>x.id===id);
+
+    if(!d)return;
+
+    document.getElementById("editorTitle")
+      .textContent="Modifica drink";
+
+    document.getElementById("editingId")
+      .value=id;
+
+    document.getElementById("drinkName")
+      .value=d.nome;
+
+    document.getElementById("drinkPreparation")
+      .value=d.istruzioni || "";
+
+    document.getElementById("drinkService")
+      .value=d.servizio || "";
+
+    selectType(d.tipo || "drink");
+
+    renderEditorCategories(d.categorie || []);
+
+    renderIngredients(d.ingredienti || []);
+
+  }else{
+
+    document.getElementById("editorTitle")
+      .textContent="Nuovo drink";
+
+    renderEditorCategories([]);
+
+    addIngredient();
+
+  }
+
+  document.getElementById("drinkEditor")
+    .classList.add("active");
+
+}
+
+
+function resetEditor(){
+
+  document.getElementById("editingId").value="";
+
+  document.getElementById("drinkName").value="";
+
+  document.getElementById("drinkPreparation").value="";
+
+  document.getElementById("drinkService").value="";
+
+  document.getElementById("ingredientRows").innerHTML="";
+
+  selectedType="drink";
+
+  selectType("drink");
+
+}
+
+
+function renderEditorCategories(selected=[]){
+
+  const box=document.getElementById("editorCategories");
+
+  box.innerHTML="";
+
+  categories.forEach(cat=>{
+
+    const button=document.createElement("button");
+
+    button.className="category-choice";
+
+    button.textContent=cat.nome;
+
+    button.dataset.id=cat.id;
+
+    if(selected.includes(cat.id)){
+      button.classList.add("selected");
+    }
+
+    button.onclick=()=>{
+
+      button.classList.toggle("selected");
+
+    };
+
+    box.appendChild(button);
+
+  });
+
+}
+
+
+/* =========================
+   INGREDIENTS
+========================= */
+
+function addIngredient(data={}){
+
+  const row=document.createElement("div");
+
+  row.className="ingredient-row";
+
+  row.innerHTML=`
+
+    <input
+      class="input qty"
+      placeholder="30"
+      value="${escapeHtml(data.qty || "")}"
+    >
+
+    <select class="select unit">
+      <option value="">—</option>
+      <option ${data.unit==="ml"?"selected":""}>ml</option>
+      <option ${data.unit==="cl"?"selected":""}>cl</option>
+      <option ${data.unit==="g"?"selected":""}>g</option>
+      <option ${data.unit==="kg"?"selected":""}>kg</option>
+      <option ${data.unit==="dash"?"selected":""}>dash</option>
+      <option ${data.unit==="barspoon"?"selected":""}>bs</option>
+      <option ${data.unit==="pz"?"selected":""}>pz</option>
+      <option ${data.unit==="q.b."?"selected":""}>q.b.</option>
+    </select>
+
+    <input
+      class="input ing-name"
+      placeholder="Ingrediente"
+      value="${escapeHtml(data.name || "")}"
+    >
+
+    <button
+      class="remove-ing"
+      onclick="this.parentElement.remove()">
+      ×
+    </button>
+
+  `;
+
+  document.getElementById("ingredientRows")
+    .appendChild(row);
+
+}
+
+
+function renderIngredients(list){
+
+  const box=document.getElementById("ingredientRows");
+
+  box.innerHTML="";
+
+  if(!list.length){
+    addIngredient();
+    return;
+  }
+
+  list.forEach(addIngredient);
+
+}
+
+
+/* =========================
+   SAVE DRINK
+========================= */
+
+function saveDrink(){
+
+  const name=document.getElementById("drinkName")
+    .value.trim();
+
+  if(!name){
+
+    alert("Inserisci il nome del drink.");
+
+    return;
+
+  }
+
+
+  const ingredientRows=[
+    ...document.querySelectorAll(".ingredient-row")
+  ];
+
+  const ingredienti=ingredientRows
+    .map(row=>({
+
+      qty:row.querySelector(".qty").value.trim(),
+
+      unit:row.querySelector(".unit").value,
+
+      name:row.querySelector(".ing-name").value.trim()
+
+    }))
+    .filter(x=>x.name);
+
+
+  const selectedCategories=[
+    ...document.querySelectorAll(
+      "#editorCategories .selected"
+    )
+  ].map(x=>Number(x.dataset.id));
+
+
+  const editingId=
+    document.getElementById("editingId").value;
+
+
+  if(editingId){
+
+    const d=drinks.find(
+      x=>x.id===Number(editingId)
+    );
+
+    if(d){
+
+      d.nome=name;
+      d.tipo=selectedType;
+      d.categorie=selectedCategories;
+      d.ingredienti=ingredienti;
+      d.istruzioni=document.getElementById("drinkPreparation").value.trim();
+      d.servizio=document.getElementById("drinkService").value.trim();
+      d.data=new Date().toLocaleDateString("it-IT");
+
+    }
+
+  }else{
+
+    drinks.unshift({
+
+      id:Date.now(),
+
+      nome:name,
+
+      tipo:selectedType,
+
+      categorie:selectedCategories,
+
+      ingredienti:ingredienti,
+
+      istruzioni:
+        document.getElementById("drinkPreparation").value.trim(),
+
+      servizio:
+        document.getElementById("drinkService").value.trim(),
+
+      favorite:false,
+
+      data:new Date().toLocaleDateString("it-IT")
+
+    });
+
+  }
+
+
+  saveData();
+
+  closeOverlay("drinkEditor");
+
+  showPage("drinksPage");
+
+}
+
+
+/* =========================
+   DETAIL
+========================= */
+
+function openDrinkDetail(id){
+
+  const d=drinks.find(x=>x.id===id);
+
+  if(!d)return;
+
+  const cats=(d.categorie || [])
+    .map(id=>categories.find(c=>c.id===id))
+    .filter(Boolean);
+
+  const ingredients=d.ingredienti || [];
+
+  document.getElementById("detailContent").innerHTML=`
+
+    <h1 class="detail-title">
+      ${d.tipo==="prebatch"?"🧃":"🥃"} ${escapeHtml(d.nome)}
+    </h1>
+
+    <div class="detail-sub">
+      ${d.tipo==="prebatch"?"Pre Batch":"Drink"}
+      ${d.data ? " · "+escapeHtml(d.data) : ""}
+    </div>
+
+    ${
+      cats.length
+      ? `<div class="tags">
+          ${cats.map(c=>`
+            <span
+              class="tag-cat"
+              style="background:${c.color}">
+              ${escapeHtml(c.nome)}
+            </span>
+          `).join("")}
+         </div>`
+      :""
+    }
+
+
+    <div class="detail-section">
+
+      <h3>Ingredienti</h3>
+
+      <div class="detail-ingredients">
+
+        ${
+          ingredients.length
+
+          ? ingredients.map(i=>`
+
+              <div class="detail-ing">
+
+                <span>${escapeHtml(i.name)}</span>
+
+                <strong>
+                  ${escapeHtml(i.qty)}
+                  ${i.unit ? " "+escapeHtml(i.unit):""}
+                </strong>
+
+              </div>
+
+            `).join("")
+
+          : "<div>Nessun ingrediente</div>"
+        }
+
+      </div>
+
+    </div>
+
+
+    ${
+      d.istruzioni
+
+      ? `
+        <div class="detail-section">
+
+          <h3>Preparazione</h3>
+
+          <div class="preparation">
+            ${escapeHtml(d.istruzioni)}
+          </div>
+
+        </div>
+      `
+      :""
+    }
+
+
+    ${
+      d.servizio
+
+      ? `
+        <div class="detail-section">
+
+          <h3>Servizio</h3>
+
+          <div class="preparation">
+            ${escapeHtml(d.servizio)}
+          </div>
+
+        </div>
+      `
+      :""
+    }
+
+
+    <div class="detail-actions">
+
+      <button
+        class="action-btn action-edit"
+        onclick="closeOverlay('detailModal');openDrinkEditor(${d.id})">
+        ✏️ Modifica
+      </button>
+
+      <button
+        class="action-btn action-delete"
+        onclick="deleteDrink(${d.id})">
+        🗑️ Elimina
+      </button>
+
+    </div>
+
+  `;
+
+  document.getElementById("detailModal")
+    .classList.add("active");
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteDrink(id){
+
+  const d=drinks.find(x=>x.id===id);
+
+  if(!d)return;
+
+  if(!confirm(`Eliminare "${d.nome}"?`))
+    return;
+
+  drinks=drinks.filter(x=>x.id!==id);
+
+  saveData();
+
+  closeOverlay("detailModal");
+
+}
+
+
+/* =========================
+   FAVORITE
+========================= */
+
+function toggleFavorite(id){
+
+  const d=drinks.find(x=>x.id===id);
+
+  if(!d)return;
+
+  d.favorite=!d.favorite;
+
+  saveData();
+
+}
+
+
+/* =========================
+   RENDER CARD
+========================= */
+
+function drinkCard(d){
+
+  const cats=(d.categorie || [])
+    .map(id=>categories.find(c=>c.id===id))
+    .filter(Boolean);
+
+
+  const preview=(d.ingredienti || [])
+    .slice(0,3)
+    .map(i=>{
+
+      return `${i.qty ? i.qty+" ":""}${i.unit ? i.unit+" ":""}${i.name}`;
+
+    })
+    .join(" · ");
+
+
+  return `
+
+    <article class="drink-card">
+
+      <div class="drink-main">
+
+        <div class="drink-info">
+
+          <div class="drink-title">
+            ${d.tipo==="prebatch"?"🧃":"🥃"}
+            ${escapeHtml(d.nome)}
+          </div>
+
+          <div class="drink-type">
+            ${d.tipo==="prebatch"?"PRE BATCH":"DRINK"}
+          </div>
+
+        </div>
+
+        <button
+          class="favorite"
+          onclick="event.stopPropagation();toggleFavorite(${d.id})">
+
+          ${d.favorite ? "⭐":"☆"}
+
+        </button>
+
+      </div>
+
+
+      ${
+        cats.length
+
+        ? `
+          <div class="tags">
+
+            ${cats.map(c=>`
+
+              <span
+                class="tag-cat"
+                style="background:${c.color}">
+                ${escapeHtml(c.nome)}
+              </span>
+
+            `).join("")}
+
+          </div>
+        `
+
+        :""
+      }
+
+
+      ${
+        preview
+
+        ? `
+          <div class="ingredient-preview">
+            ${escapeHtml(preview)}
+          </div>
+        `
+
+        :""
+      }
+
+
+      <div class="card-bottom">
+
+        <span class="card-date">
+          ${escapeHtml(d.data || "")}
+        </span>
+
+        <button
+          class="card-open"
+          onclick="openDrinkDetail(${d.id})">
+          Apri →
+        </button>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderRecent(){
+
+  const list=drinks.slice(0,5);
+
+  document.getElementById("recentList")
+    .innerHTML=
+
+    list.length
+
+    ? list.map(drinkCard).join("")
+
+    : emptyHTML(
+        "🥂",
+        "Il ricettario è vuoto",
+        "Aggiungi il tuo primo drink."
+      );
+
+}
+
+
+function renderStats(){
+
+  document.getElementById("statDrinks")
+    .textContent=
+    drinks.filter(d=>d.tipo==="drink").length;
+
+  document.getElementById("statBatch")
+    .textContent=
+    drinks.filter(d=>d.tipo==="prebatch").length;
+
+  document.getElementById("statFav")
+    .textContent=
+    drinks.filter(d=>d.favorite).length;
+
+}
+
+
+function renderHomeCategories(){
+
+  const box=document.getElementById("homeCategories");
+
+  box.innerHTML=categories.map(c=>`
+
+    <button
+      class="chip"
+      onclick="showPage('drinksPage');setCategoryFilter(${c.id})">
+
+      ${escapeHtml(c.nome)}
+
+    </button>
+
+  `).join("");
+
+}
+
+
+function renderAllCategories(){
+
+  document.getElementById("allCategories")
+    .innerHTML=categories.map(c=>`
+
+      <button
+        class="chip"
+        onclick="showPage('drinksPage');setCategoryFilter(${c.id})">
+
+        ${escapeHtml(c.nome)}
+
+      </button>
+
+    `).join("");
+
+}
+
+
+function renderDrinkFilters(){
+
+  const box=document.getElementById("drinkFilters");
+
+  box.innerHTML=`
+
+    <button class="chip" onclick="setDrinkFilter('all')">
+      Tutti
+    </button>
+
+    <button class="chip" onclick="setDrinkFilter('drink')">
+      🥃 Drink
+    </button>
+
+    <button class="chip" onclick="setDrinkFilter('prebatch')">
+      🧃 Pre Batch
+    </button>
+
+    <button class="chip" onclick="setDrinkFilter('favorite')">
+      ⭐ Preferiti
+    </button>
+
+  `;
+
+}
+
+
+function renderDrinkList(){
+
+  let list=[...drinks];
+
+  const q=document.getElementById("searchInput")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  if(q){
+
+    list=list.filter(d=>{
+
+      const name=d.nome.toLowerCase();
+
+      const ingredients=(d.ingredienti || [])
+        .map(i=>i.name)
+        .join(" ")
+        .toLowerCase();
+
+      return name.includes(q) || ingredients.includes(q);
+
+    });
+
+  }
+
+
+  if(currentFilter==="drink")
+    list=list.filter(d=>d.tipo==="drink");
+
+  if(currentFilter==="prebatch")
+    list=list.filter(d=>d.tipo==="prebatch");
+
+  if(currentFilter==="favorite")
+    list=list.filter(d=>d.favorite);
+
+  if(typeof currentFilter==="number"){
+
+    list=list.filter(d=>
+      (d.categorie || []).includes(currentFilter)
+    );
+
+  }
+
+
+  list.sort((a,b)=>
+    a.nome.localeCompare(b.nome)
+  );
+
+
+  document.getElementById("drinkCounter")
+    .textContent=list.length;
+
+
+  document.getElementById("drinkList")
+    .innerHTML=
+
+    list.length
+
+    ? list.map(drinkCard).join("")
+
+    : emptyHTML(
+        "🍸",
+        "Nessun drink trovato",
+        "Prova un'altra ricerca o categoria."
+      );
+
+
+  let title="Tutti i drink";
+
+  if(currentFilter==="drink")
+    title="Drink";
+
+  if(currentFilter==="prebatch")
+    title="Pre Batch";
+
+  if(currentFilter==="favorite")
+    title="Preferiti";
+
+  if(typeof currentFilter==="number"){
+
+    const cat=categories.find(
+      c=>c.id===currentFilter
+    );
+
+    if(cat)title=cat.nome;
+
+  }
+
+  if(q)
+    title="Risultati ricerca";
+
+
+  document.getElementById("drinkPageTitle")
+    .textContent=title;
+
+}
+
+
+function renderFavorites(){
+
+  const fav=drinks.filter(d=>d.favorite);
+
+  document.getElementById("favoriteList")
+    .innerHTML=
+
+    fav.length
+
+    ? fav.map(drinkCard).join("")
+
+    : emptyHTML(
+        "⭐",
+        "Nessun preferito",
+        "Premi la stella su un drink per salvarlo qui."
+      );
+
+}
+
+
+function emptyHTML(icon,title,text){
+
+  return `
+
+    <div class="empty">
+
+      <div class="empty-icon">${icon}</div>
+
+      <h3>${title}</h3>
+
+      <p>${text}</p>
+
+    </div>
+
+  `;
+
+}
+
+
+function refreshUI(){
+
+  renderStats();
+
+  renderRecent();
+
+  renderHomeCategories();
+
+  renderAllCategories();
+
+  renderDrinkFilters();
+
+  renderDrinkList();
+
+  renderFavorites();
+
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+function setDrinkFilter(filter){
+
+  currentFilter=filter;
+
+  showPage("drinksPage");
+
+  renderDrinkList();
+
+}
+
+
+function setCategoryFilter(id){
+
+  currentFilter=id;
+
+  showPage("drinksPage");
+
+  renderDrinkList();
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document.getElementById("searchInput")
+  .addEventListener("input",function(){
+
+    const clear=document.getElementById("clearSearch");
+
+    clear.style.display=
+      this.value ? "block":"none";
+
+    if(this.value){
+
+      currentFilter="all";
+
+      showPage("drinksPage");
+
+    }
+
+    renderDrinkList();
+
+  });
+
+
+document.getElementById("clearSearch")
+  .addEventListener("click",function(){
+
+    document.getElementById("searchInput")
+      .value="";
+
+    this.style.display="none";
+
+    renderDrinkList();
+
+  });
+
+
+/* =========================
+   CATEGORY MANAGER
+========================= */
+
+function openCategoryManager(){
+
+  renderCategoryManager();
+
+  document.getElementById("categoryModal")
+    .classList.add("active");
+
+}
+
+
+function renderCategoryManager(){
+
+  const box=document.getElementById(
+    "categoryManagerList"
+  );
+
+  box.innerHTML=categories.map(c=>`
+
+    <div class="drink-card" style="margin-bottom:9px">
+
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:9px;
+      ">
+
+        <div style="
+          width:30px;
+          height:30px;
+          border-radius:9px;
+          background:${c.color};
+        "></div>
+
+        <input
+          class="input"
+          style="flex:1"
+          value="${escapeHtml(c.nome)}"
+          onchange="renameCategory(${c.id},this.value)"
+        >
+
+        <input
+          type="color"
+          value="${c.color}"
+          onchange="changeCategoryColor(${c.id},this.value)"
+          style="
+            width:38px;
+            height:38px;
+            border:none;
+            background:none;
+          "
+        >
+
+        <button
+          onclick="deleteCategory(${c.id})"
+          style="
+            border:none;
+            background:#F9EAEA;
+            color:#D85C5C;
+            width:35px;
+            height:35px;
+            border-radius:10px;
+          ">
+          ×
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+function addCategory(){
+
+  const name=prompt("Nome della nuova categoria:");
+
+  if(!name || !name.trim())return;
+
+  categories.push({
+
+    id:Date.now(),
+
+    nome:name.trim(),
+
+    color:"#65755A"
+
+  });
+
+  saveCategories();
+
+  renderCategoryManager();
+
+  refreshUI();
+
+}
+
+
+function renameCategory(id,name){
+
+  const c=categories.find(x=>x.id===id);
+
+  if(c){
+
+    c.nome=name.trim() || c.nome;
+
+    saveCategories();
+
+    refreshUI();
+
+  }
+
+}
+
+
+function changeCategoryColor(id,color){
+
+  const c=categories.find(x=>x.id===id);
+
+  if(c){
+
+    c.color=color;
+
+    saveCategories();
+
+    refreshUI();
+
+  }
+
+}
+
+
+function deleteCategory(id){
+
+  const c=categories.find(x=>x.id===id);
+
+  if(!c)return;
+
+  if(!confirm(`Eliminare "${c.nome}"?`))
+    return;
+
+  categories=categories.filter(x=>x.id!==id);
+
+  drinks.forEach(d=>{
+
+    d.categorie=(d.categorie || [])
+      .filter(x=>x!==id);
+
+  });
+
+  saveData();
+
+  renderCategoryManager();
+
+}
+
+
+/* =========================
+   BACKUP
+========================= */
+
+function exportData(){
+
+  const data={
+
+    version:2,
+
+    exportedAt:new Date().toISOString(),
+
+    drinks,
+
+    categories
+
+  };
+
+
+  const blob=new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  );
+
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+
+  a.download=
+    `mint-pocket-backup-${new Date()
+      .toISOString()
+      .slice(0,10)}.json`;
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function openBackup(){
+
+  document.getElementById("backupModal")
+    .classList.add("active");
+
+}
+
+
+document.getElementById("importFile")
+  .addEventListener("change",function(e){
+
+    const file=e.target.files[0];
+
+    if(!file)return;
+
+    const reader=new FileReader();
+
+    reader.onload=function(){
+
+      try{
+
+        const data=JSON.parse(reader.result);
+
+        if(!Array.isArray(data.drinks))
+          throw new Error();
+
+
+        if(!confirm(
+          `Ripristinare ${data.drinks.length} drink?`
+        ))return;
+
+
+        drinks=data.drinks;
+
+        if(Array.isArray(data.categories))
+          categories=data.categories;
+
+
+        saveData();
+
+        closeOverlay("backupModal");
+
+        alert("Backup ripristinato.");
+
+      }catch{
+
+        alert("File di backup non valido.");
+
+      }
+
+    };
+
+    reader.readAsText(file);
+
+    e.target.value="";
+
+  });
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+function openSettings(){
+
+  showPage("settingsPage");
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeOverlay(id){
+
+  document.getElementById(id)
+    .classList.remove("active");
+
+}
+
+
+document.querySelectorAll(".overlay")
+  .forEach(overlay=>{
+
+    overlay.addEventListener("click",e=>{
+
+      if(e.target===overlay){
+
+        overlay.classList.remove("active");
+
+      }
+
+    });
+
+  });
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(str){
+
+  if(str===undefined || str===null)
+    return "";
+
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+
+}
+
+
+/* =========================
+   INIT
+========================= */
+
+loadData();
+
+refreshUI();
+
+</script>
+
+</body>
+</html>
